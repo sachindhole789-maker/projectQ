@@ -25,7 +25,10 @@ coverage/
 # ---------- Logs / runtime ----------
 logs/
 *.log
-storage/
+# Runtime upload directories only; src/App.Infrastructure/Storage is source.
+/storage/
+/src/Rest.API/storage/
+/runner/App.Runner/storage/
 *.db
 *.mdf
 *.ldf
