@@ -1,0 +1,47 @@
+{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning"
+      }
+    }
+  },
+  "Security": {
+    "MasterKey": ""
+  },
+  "Jwt": {
+    "SigningKey": ""
+  },
+  "Database": {
+    "Provider": "AwsRds",
+    "ConnectionString": "Server=CHANGE_ME.rds.amazonaws.com,1433;Database=RestDb_Production;User Id=app_user;Password=CHANGE_ME;Encrypt=True;TrustServerCertificate=False;",
+    "InitializeOnStartup": false,
+    "SeedOnStartup": false
+  },
+  "Storage": {
+    "Provider": "S3",
+    "BucketName": "rest-api-production-CHANGE-ME",
+    "Region": "ap-south-1",
+    "Prefix": "documents",
+    "UseServerSideEncryption": true
+  },
+  "Email": {
+    "Provider": "Smtp",
+    "Host": "smtp.example.com",
+    "Port": 587,
+    "UseStartTls": true,
+    "UseSsl": false,
+    "Username": "CHANGE_ME",
+    "Password": "",
+    "FromEmail": "no-reply@example.com",
+    "FromName": "Rest API"
+  },
+  "Notifications": {
+    "Enabled": true,
+    "PollIntervalSeconds": 15
+  },
+  "AuditLog": {
+    "RetentionDays": 365
+  }
+}

@@ -1,0 +1,74 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: rest-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in your local .env file}"
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  localstack:
+    image: localstack/localstack:stable
+    container_name: rest-localstack
+    environment:
+      SERVICES: s3
+      DEFAULT_REGION: "${AWS_DEFAULT_REGION:-us-east-1}"
+      DEBUG: "0"
+    ports:
+      - "4566:4566"
+    volumes:
+      - localstack-data:/var/lib/localstack
+
+  localstack-init:
+    image: amazon/aws-cli:latest
+    container_name: rest-localstack-init
+    depends_on:
+      - localstack
+    environment:
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID:-test}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY:-test}"
+      AWS_DEFAULT_REGION: "${AWS_DEFAULT_REGION:-us-east-1}"
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        until aws --endpoint-url=http://localstack:4566 s3api list-buckets >/dev/null 2>&1; do sleep 2; done
+        aws --endpoint-url=http://localstack:4566 s3api create-bucket --bucket rest-api-testing >/dev/null 2>&1 || true
+        aws --endpoint-url=http://localstack:4566 s3api put-bucket-versioning --bucket rest-api-testing --versioning-configuration Status=Enabled
+        aws --endpoint-url=http://localstack:4566 s3api put-public-access-block --bucket rest-api-testing --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: rest-mailpit
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  clamav:
+    image: clamav/clamav:stable
+    container_name: rest-clamav
+    ports:
+      - "3310:3310"
+    volumes:
+      - clamav-data:/var/lib/clamav
+    healthcheck:
+      test: [ "CMD-SHELL", "clamdcheck.sh || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+volumes:
+  sqlserver-data:
+  localstack-data:
+  clamav-data:

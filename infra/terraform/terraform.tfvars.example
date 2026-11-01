@@ -1,0 +1,27 @@
+aws_region   = "ap-south-1"
+project_name = "rest-api"
+
+environments = ["development", "testing", "production"]
+
+cors_allowed_origins = {
+  development = ["http://localhost:3000", "http://localhost:8080"]
+  testing     = ["http://localhost:3000"]
+  production  = ["https://app.example.com"]
+}
+
+# Optional customer-managed key. Leave null to use SSE-S3 (AES-256).
+kms_key_arn = null
+
+# Set to true only after providing private subnets and a security group that
+# allows the API hosts to connect on port 1433. Never expose RDS publicly.
+create_rds            = false
+rds_instance_class    = "db.t3.small"
+rds_username          = "app_user"
+rds_multi_az          = false
+rds_deletion_protection = true
+
+# Supply the password with: export TF_VAR_rds_password='...'
+# rds_password = "set-via-TF_VAR_rds_password"
+
+# rds_subnet_ids         = ["subnet-aaa", "subnet-bbb"]
+# rds_security_group_ids = ["sg-aaa"]

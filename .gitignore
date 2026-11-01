@@ -1,0 +1,66 @@
+# ---------- .NET ----------
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+artifacts/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.idea/
+*.swp
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.trx
+*.coverlet.json
+
+# ---------- Logs / runtime ----------
+logs/
+*.log
+storage/
+*.db
+*.mdf
+*.ldf
+.tools/
+
+# ---------- Secrets (NEVER commit) ----------
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+secrets.json
+*.pfx
+*.p12
+*.key
+*.pem
+appsettings.Production.json
+
+# ---------- Database schema (NEVER commit) ----------
+# Keep tables, stored procedures and queries on your machine or in your
+# private database repository.
+db/
+
+# Terraform / AWS state
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+override.tf
+override.tf.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/

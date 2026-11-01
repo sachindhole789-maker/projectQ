@@ -1,0 +1,88 @@
+{
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.AspNetCore": "Warning",
+        "System": "Warning"
+      }
+    }
+  },
+  "Security": {
+    "MasterKey": ""
+  },
+  "Jwt": {
+    "Issuer": "Rest.API",
+    "Audience": "Rest.Client",
+    "SigningKey": "",
+    "AccessTokenMinutes": 20,
+    "RefreshTokenDays": 14,
+    "ClockSkewSeconds": 30
+  },
+  "Database": {
+    "Provider": "AwsRds",
+    "ConnectionString": "Server=CHANGE_ME.rds.amazonaws.com,1433;Database=RestDb_Production;User Id=app_user;Password=CHANGE_ME;Encrypt=True;TrustServerCertificate=False;",
+    "CommandTimeoutSeconds": 60,
+    "InitializeOnStartup": false,
+    "SeedOnStartup": false,
+    "AuditRetentionDays": 90
+  },
+  "Storage": {
+    "Provider": "S3",
+    "BucketName": "rest-api-production-CHANGE-ME",
+    "Region": "ap-south-1",
+    "Prefix": "documents",
+    "UseServerSideEncryption": true,
+    "KmsKeyId": "",
+    "PresignedUrlMinutes": 10
+  },
+  "Email": {
+    "Provider": "Smtp",
+    "Host": "smtp.example.com",
+    "Port": 587,
+    "UseStartTls": true,
+    "UseSsl": false,
+    "Username": "CHANGE_ME",
+    "Password": "",
+    "FromEmail": "no-reply@example.com",
+    "FromName": "Rest API"
+  },
+  "AuditLog": {
+    "CaptureRequestBody": true,
+    "CaptureResponseBody": true,
+    "RetentionDays": 365
+  },
+  "RateLimiting": {
+    "Enabled": true,
+    "GlobalPermitLimit": 100,
+    "UserPermitLimit": 300,
+    "AuthPermitLimit": 5
+  },
+  "Cors": {
+    "AllowedOrigins": [ "https://app.example.com" ],
+    "AllowLocalhostAnyPort": false,
+    "AllowCredentials": true
+  },
+  "VirusScan": {
+    "Provider": "ClamAV",
+    "Host": "clamav",
+    "Port": 3310,
+    "TimeoutSeconds": 60
+  },
+  "Notifications": {
+    "Enabled": true,
+    "PollIntervalSeconds": 15
+  },
+  "BackgroundJobs": {
+    "RunAuditWriter": true,
+    "RunNotificationDispatcher": false,
+    "RunAuditRetention": false,
+    "RunDashboardBroadcast": true
+  },
+  "Seed": {
+    "AdminEmail": "admin@example.com",
+    "AdminPassword": "",
+    "AdminDisplayName": "Administrator"
+  }
+}

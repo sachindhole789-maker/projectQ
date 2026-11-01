@@ -1,0 +1,11 @@
+{
+  "Security": {
+    "MasterKey": ""
+  },
+  "Jwt": {
+    "SigningKey": ""
+  },
+  "Database": {
+    "ConnectionString": "Server=localhost,1433;Database=RestDb_PreDevelopment;User Id=sa;Password=YOUR_SA_PASSWORD;Encrypt=True;TrustServerCertificate=True;"
+  }
+}
